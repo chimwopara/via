@@ -218,9 +218,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('hero.png');
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
             object-fit: cover;
             z-index: -2;
         }
@@ -1521,7 +1519,13 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <!-- In production, replace with actual video -->
-        <div class="hero-video"></div>
+        <div class="hero-video">
+            <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="hero.mp4" type="video/mp4">
+                <!-- Fallback to static image if video fails to load -->
+                <img src="hero.png" alt="Luxury Properties" style="width: 100%; height: 100%; object-fit: cover;">
+            </video>
+        </div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <p class="hero-subtitle">Luxury • Modern • Trustworthy</p>
