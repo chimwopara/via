@@ -140,6 +140,22 @@
             align-items: center;
         }
         
+        .logo img {
+            height: 3.5rem; /* 56px by default */
+            width: auto;
+            max-height: 4rem; /* 64px */
+            max-width: 280px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .logo img {
+                height: 3rem; /* 48px on mobile */
+                max-width: 200px;
+                max-height: 3.5rem; /* 56px */
+            }
+        }
+        
         .nav-menu {
             display: flex;
             list-style: none;
@@ -1497,7 +1513,7 @@
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
-                <img src="logo.png" alt="Via Realtors Logo" class="h-6 w-auto max-h-8" style="max-width: 120px;" onerror="this.onerror=null; this.src='https://placehold.co/120x30/36454F/F7E7CE?text=VIA+REALTORS&font=inter';">
+                <img src="logo.png" alt="Via Realtors Logo" onerror="this.onerror=null; this.src='https://placehold.co/200x48/36454F/F7E7CE?text=VIA+REALTORS&font=inter';">
             </a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home" class="nav-link">Home</a></li>
