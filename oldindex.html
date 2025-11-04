@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Via Realtors - Nigeria's Prestigious Properties</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN - REMOVED as it was for React and likely causing the script error -->
+    <!-- <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide.min.js"></script> -->
+
+    <style>
+        /* Define the color palette from the blueprint */
+        body {
+            font-family: 'Inter', sans-serif;
+            opacity: 0; /* Start as transparent for fade-in */
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        .text-gold {
+            color: #B8860B; /* A classic gold hex code */
+        }
+        .bg-gold {
+            background-color: #B8860B;
+        }
+        .border-gold {
+            border-color: #B8860B;
+        }
+        .hover\:bg-gold-dark:hover {
+            background-color: #9A6F0A; /* A darker gold for hover */
+        }
+        .bg-nude {
+            background-color: #F5F5DC; /* A beige/nude tone */
+        }
+        .bg-champagne {
+            background-color: #F7E7CE; /* A light champagne tone */
+        }
+        .bg-charcoal {
+            background-color: #36454F;
+        }
+        .text-charcoal {
+            color: #36454F;
+        }
+        
+        /* Added Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulseIcon {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .icon-pulse {
+            animation: pulseIcon 2.5s infinite ease-in-out;
+        }
+
+        /* Ensure the floating WhatsApp button is always fixed to the viewport
+           and visible in the bottom-right, even if ancestors have transforms. */
+        .floating-wa {
+            position: fixed !important;
+            bottom: 1.5rem !important; /* same as bottom-6 */
+            right: 1.5rem !important;  /* same as right-6 */
+            z-index: 99999 !important; /* ensure it sits above other content */
+            pointer-events: auto !important;
+            transform: none !important; /* prevent inheritance of transforms */
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-charcoal">
+
+    <!-- 
+      Header / Navigation
+      Corresponds to Blueprint Section 2 (implied) and links to other sections.
+    -->
+    <header class="bg-white sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex-shrink-0">
+                <!-- 
+                  IMAGE PLACEHOLDER: logo.png
+                  DESCRIPTION: Your official Via Realtors company logo. 
+                  Should be high-resolution with a transparent background.
+                -->
+                <img class="h-10 w-auto" src="logo.png" alt="Via Realtors Logo" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/150x40/36454F/F7E7CE?text=VIA+REALTORS&font=inter';">
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-gold font-medium transition-all duration-300 ease-in-out">Home</a>
+                <a href="#" class="text-gray-600 hover:text-gold font-medium transition-all duration-300 ease-in-out">Properties</a>
+                <a href="#" class="text-gray-600 hover:text-gold font-medium transition-all duration-300 ease-in-out">Investors</a>
+                <a href="#" class="text-gray-600 hover:text-gold font-medium transition-all duration-300 ease-in-out">About Us</a>
+                <a href="#" class="text-gray-600 hover:text-gold font-medium transition-all duration-300 ease-in-out">Blog</a>
+            </div>
+
+            <!-- CTA & Mobile Menu Button -->
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hidden sm:inline-block bg-gold text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-gold-dark shadow-lg transition-all duration-300 ease-in-out">
+                    Book a Consultation
+                </a>
+                <!-- Mobile Menu Button (Hamburger) -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-600 hover:text-gold hover:bg-stone-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-stone-200">
+            <a href="#" class="block px-5 py-3 text-gray-600 hover:bg-stone-100 hover:text-gold font-medium">Home</a>
+            <a href="#" class="block px-5 py-3 text-gray-600 hover:bg-stone-100 hover:text-gold font-medium">Properties</a>
+            <a href="#" class="block px-5 py-3 text-gray-600 hover:bg-stone-100 hover:text-gold font-medium">Investors</a>
+            <a href="#" class="block px-5 py-3 text-gray-600 hover:bg-stone-100 hover:text-gold font-medium">About Us</a>
+            <a href="#" class="block px-5 py-3 text-gray-600 hover:bg-stone-100 hover:text-gold font-medium">Blog</a>
+            <a href="#" class="block px-5 py-3 m-4 bg-gold text-white text-center rounded-full font-semibold hover:bg-gold-dark transition-all duration-300 ease-in-out">
+                Book a Consultation
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- 
+          Hero Section
+          Corresponds to Blueprint Section 2: "Hero Section"
+        -->
+        <section class="relative h-[70vh] min-h-[400px] w-full bg-cover bg-center bg-no-repeat text-white">
+            <!-- 
+              IMAGE PLACEHOLDER: p1.png
+              DESCRIPTION: A high-definition, full-screen luxury property video still
+              or stunning drone footage of Port Harcourt, as specified in the blueprint.
+              This image sets the "luxury" tone.
+            -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('p1.png');">
+                <!-- Fallback for broken image -->
+                <img src="p1.png" alt="Drone footage of Port Harcourt" class="hidden"
+                     onerror="this.parentElement.style.backgroundImage='url(https://placehold.co/1920x1080/36454F/F7E7CE?text=Luxury+Port+Harcourt+View&font=inter)'">
+            </div>
+            
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight mb-6">
+                    Connecting You to Nigeria's Most Prestigious Properties.
+                </h1>
+                <p class="text-lg text-stone-200 mb-8 max-w-2xl">
+                    Invest smart, live beautifully. Discover verified luxury homes and prime investments with Via Realtors.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#" class="bg-gold text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-gold-dark shadow-lg transition-all duration-300 ease-in-out">
+                        Explore Properties
+                    </a>
+                    <a href="#" class="bg-white text-charcoal px-8 py-3 rounded-full text-lg font-semibold hover:bg-stone-200 shadow-lg transition-all duration-300 ease-in-out">
+                        Book a Consultation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          Quick Search Bar
+          Corresponds to Blueprint Section 2: "Quick Search Bar"
+          UPDATED for a more modern and luxurious feel
+        -->
+        <section class="bg-white relative z-20 -mt-16 mx-4 sm:mx-8 lg:mx-auto max-w-6xl rounded-2xl shadow-xl p-8 md:p-10">
+            <form class="grid grid-cols-1 md:grid-cols-5 gap-4 lg:gap-6 items-end">
+                <!-- Location -->
+                <div class="col-span-1 md:col-span-2 relative">
+                    <!-- <label for="search-location" class="block text-sm font-medium text-gray-700 mb-1">Location</label> -->
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <input type="text" id="search-location" placeholder="Location (e.g., Port Harcourt)" class="w-full pl-12 pr-4 py-3 bg-stone-100 border-2 border-transparent rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent focus:bg-white transition-all duration-300">
+                </div>
+                <!-- Property Type -->
+                <div class="col-span-1 relative">
+                    <!-- <label for="search-type" class="block text-sm font-medium text-gray-700 mb-1">Type</label> -->
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6-4h.01M12 12h.01M12 16h.01M15 12h.01M15 16h.01M9 16h.01M9 12h.01"></path></svg>
+                    </div>
+                    <select id="search-type" class="w-full pl-12 pr-4 py-3 bg-stone-100 border-2 border-transparent rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent focus:bg-white transition-all duration-300 appearance-none">
+                        <option>Property Type</option>
+                        <option>Landed Property</option>
+                        <option>Apartment</option>
+                        <option>Villa</option>
+                        <option>Commercial</option>
+                    </select>
+                </div>
+                <!-- Bedrooms -->
+                <div class="col-span-1 relative">
+                    <!-- <label for="search-bedrooms" class="block text-sm font-medium text-gray-700 mb-1">Bedrooms</label> -->
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
+                    </div>
+                    <select id="search-bedrooms" class="w-full pl-12 pr-4 py-3 bg-stone-100 border-2 border-transparent rounded-lg focus:ring-2 focus:ring-gold focus:border-transparent focus:bg-white transition-all duration-300 appearance-none">
+                        <option>Bedrooms</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4+</option>
+                    </select>
+                </div>
+                <!-- Search Button -->
+                <div class="col-span-1">
+                    <button type="submit" class="w-full bg-gold text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-gold-dark shadow-lg transition-all duration-300 ease-in-out flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        Search
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- 
+          Brand Highlights
+          Corresponds to Blueprint Section 2: "Brand Highlights"
+        -->
+        <section class="py-16 sm:py-24 bg-stone-100">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+                    <!-- Highlight 1: Experience -->
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink-0 bg-white p-4 rounded-full shadow-lg border-2 border-champagne mb-4 icon-pulse">
+                            <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-2">10+ Years Experience</h3>
+                        <p class="text-gray-600">Expert guidance in Nigeria's luxury real estate market.</p>
+                    </div>
+                    <!-- Highlight 2: Verified Listings -->
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink-0 bg-white p-4 rounded-full shadow-lg border-2 border-champagne mb-4 icon-pulse" style="animation-delay: 0.2s;">
+                            <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7 21a4 4 0 01-4-4V5a4 4 0 014-4h.5a3.5 3.5 0 013.5 3.5v.5a3.5 3.5 0 003.5 3.5h.5a4 4 0 014 4v9a4 4 0 01-4 4h-10z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-2">Verified Listings</h3>
+                        <p class="text-gray-600">Only genuine, verified properties with secure titles. No Omonile issues.</p>
+                    </div>
+                    <!-- Highlight 3: Investment Expertise -->
+                    <div class="flex flex-col items-center">
+                        <div class="flex-shrink-0 bg-white p-4 rounded-full shadow-lg border-2 border-champagne mb-4 icon-pulse" style="animation-delay: 0.4s;">
+                            <svg class="w-10 h-10 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-2">Investment Expertise</h3>
+                        <p class="text-gray-600">Maximizing your ROI with strategic property investments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          Featured Properties
+          Corresponds to Blueprint Section 2: "Featured Properties Slider"
+          (Implemented as a grid for stability)
+        -->
+        <section class="py-16 sm:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-charcoal tracking-tight">Featured Properties</h2>
+                    <p class="mt-4 text-lg text-gray-600">Explore our curated selection of verified luxury listings.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Property Card 1 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200 group transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
+                        <div class="relative overflow-hidden">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p2.png
+                              DESCRIPTION: A stunning exterior shot of a luxury property.
+                              e.g., A 5-bedroom duplex in a prime location.
+                            -->
+                            <img class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" src="p2.png" alt="Luxury 5-Bedroom Duplex"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0EFEA/36454F?text=Luxury+Property+1&font=inter'">
+                            <span class="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1 rounded-full uppercase z-10">Verified</span>
+                            <span class="absolute top-4 right-4 bg-charcoal bg-opacity-75 text-white text-xs font-bold px-3 py-1 rounded-full z-10">For Sale</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-charcoal mb-2 truncate group-hover:text-gold transition-colors">5-Bedroom Luxury Duplex</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex items-center">
+                                <svg class="w-4 h-4 text-gray-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                GRA Phase 2, Port Harcourt
+                            </p>
+                            <p class="text-2xl font-bold text-gold mb-4">₦450,000,000</p>
+                            <div class="flex justify-between text-gray-600 text-sm border-t pt-4">
+                                <span><strong class="text-charcoal">5</strong> Beds</span>
+                                <span><strong class="text-charcoal">6</strong> Baths</span>
+                                <span><strong class="text-charcoal">2</strong> Garages</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Property Card 2 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200 group transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
+                        <div class="relative overflow-hidden">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p3.png
+                              DESCRIPTION: A modern high-rise apartment building exterior or
+                              a stunning interior view with a city skyline.
+                            -->
+                            <img class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" src="p3.png" alt="Modern High-Rise Apartment"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0EFEA/36454F?text=Luxury+Property+2&font=inter'">
+                            <span class="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1 rounded-full uppercase z-10">Verified</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-charcoal mb-2 truncate group-hover:text-gold transition-colors">3-Bedroom Ocean View Apt</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex items-center">
+                                <svg class="w-4 h-4 text-gray-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Eko Atlantic, Lagos
+                            </p>
+                            <p class="text-2xl font-bold text-gold mb-4">₦820,000,000</p>
+                            <div class="flex justify-between text-gray-600 text-sm border-t pt-4">
+                                <span><strong class="text-charcoal">3</strong> Beds</span>
+                                <span><strong class="text-charcoal">4</strong> Baths</span>
+                                <span><strong class="text-charcoal">2</strong> Garages</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Card 3 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200 group transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
+                        <div class="relative overflow-hidden">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p4.png
+                              DESCRIPTION: A large plot of land, ideally with a good view or
+                              clear markings. Emphasizes investment.
+                            -->
+                            <img class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" src="p4.png" alt="Prime Plot of Land"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0EFEA/36454F?text=Luxury+Property+3&font=inter'">
+                            <span class="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1 rounded-full uppercase z-10">Verified</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-charcoal mb-2 truncate group-hover:text-gold transition-colors">2 Plots of Land (C of O)</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex items-center">
+                                <svg class="w-4 h-4 text-gray-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Asokoro, Abuja
+                            </p>
+                            <p class="text-2xl font-bold text-gold mb-4">₦1,200,000,000</p>
+                            <div class="flex justify-between text-gray-600 text-sm border-t pt-4">
+                                <span><strong class="text-charcoal">1200</strong> sqm</span>
+                                <span><strong class="text-charcoal">Residential</strong></span>
+                                <span><strong class="text-charcoal">C of O</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property Card 4 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-stone-200 group transform hover:-translate-y-2 transition-all duration-300 ease-in-out">
+                        <div class="relative overflow-hidden">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p5.png
+                              DESCRIPTION: A shot of a commercial property, e.g., a modern
+                              office building or luxury retail space.
+                            -->
+                            <img class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out" src="p5.png" alt="Commercial Plaza"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/400x300/F0EFEA/36454F?text=Luxury+Property+4&font=inter'">
+                            <span class="absolute top-4 left-4 bg-gold text-white text-xs font-bold px-3 py-1 rounded-full uppercase z-10">Verified</span>
+                            <span class="absolute top-4 right-4 bg-charcoal bg-opacity-75 text-white text-xs font-bold px-3 py-1 rounded-full z-10">For Rent</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-charcoal mb-2 truncate group-hover:text-gold transition-colors">Executive Office Space</h3>
+                            <p class="text-gray-600 text-sm mb-4 flex items-center">
+                                <svg class="w-4 h-4 text-gray-500 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                Victoria Island, Lagos
+                            </p>
+                            <p class="text-2xl font-bold text-gold mb-4">₦50,000,000 / Annum</p>
+                            <div class="flex justify-between text-gray-600 text-sm border-t pt-4">
+                                <span><strong class="text-charcoal">500</strong> sqm</span>
+                                <span><strong class="text-charcoal">Grade A</strong></span>
+                                <span><strong class="text-charcoal">Serviced</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#" class="bg-charcoal text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out">
+                        View All Properties
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          Metrics Counter
+          Corresponds to Blueprint Section 11: "Metrics Counter"
+        -->
+        <section class="bg-champagne py-16 sm:py-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div>
+                        <span class="block text-4xl sm:text-5xl font-bold text-gold">200+</span>
+                        <span class="block text-xl font-semibold text-charcoal mt-2">Properties Sold</span>
+                    </div>
+                    <div>
+                        <span class="block text-4xl sm:text-5xl font-bold text-gold">95%</span>
+                        <span class="block text-xl font-semibold text-charcoal mt-2">Client Satisfaction</span>
+                    </div>
+                    <div>
+                        <span class="block text-4xl sm:text-5xl font-bold text-gold">10+</span>
+                        <span class="block text-xl font-semibold text-charcoal mt-2">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 
+          Client Testimonials
+          Corresponds to Blueprint Section 2: "Client Testimonials"
+          (Implemented as a static grid)
+        -->
+        <section class="py-16 sm:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-charcoal tracking-tight">What Our Clients Say</h2>
+                    <p class="mt-4 text-lg text-gray-600">Trust, professionalism, and results. Hear it from our investors.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-stone-100 p-8 rounded-2xl shadow-lg border border-stone-200">
+                        <div class="flex items-center mb-4">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p6.png
+                              DESCRIPTION: A professional, smiling headshot of a client.
+                              e.g., A well-dressed male investor.
+                            -->
+                            <img class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-gold" src="p6.png" alt="Client 1"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/100x100/36454F/F7E7CE?text=C1&font=inter'">
+                            <div>
+                                <h4 class="font-bold text-lg text-charcoal">Chief T. Alakija</h4>
+                                <p class="text-sm text-gray-600">Real Estate Investor</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">
+                            "Via Realtors handled my investment portfolio with utmost professionalism. Their knowledge of verified titles in Lagos is unmatched. They found me a high-ROI property I couldn't find elsewhere."
+                        </p>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="bg-stone-100 p-8 rounded-2xl shadow-lg border border-stone-200">
+                        <div class="flex items-center mb-4">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p7.png
+                              DESCRIPTION: A professional headshot of another client.
+                              e.g., A smiling woman, perhaps a homeowner.
+                            -->
+                            <img class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-gold" src="p7.png" alt="Client 2"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/100x100/36454F/F7E7CE?text=C2&font=inter'">
+                            <div>
+                                <h4 class="font-bold text-lg text-charcoal">Mrs. Funke Adebayo</h4>
+                                <p class="text-sm text-gray-600">First-Time Home Buyer</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">
+                            "As a first-time buyer, I was scared of 'Omonile' issues. The team at Via Realtors patiently guided me, explained verified titles, and found my family the perfect, secure home in Port Harcourt."
+                        </p>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="bg-stone-100 p-8 rounded-2xl shadow-lg border border-stone-200">
+                        <div class="flex items-center mb-4">
+                            <!-- 
+                              IMAGE PLACEHOLDER: p8.png
+                              DESCRIPTION: Another client photo, perhaps a couple.
+                            -->
+                            <img class="w-14 h-14 rounded-full object-cover mr-4 border-2 border-gold" src="p8.png" alt="Client 3"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/100x100/36454F/F7E7CE?text=C3&font=inter'">
+                            <div>
+                                <h4 class="font-bold text-lg text-charcoal">Mr. & Mrs. Okon</h4>
+                                <p class="text-sm text-gray-600">Diaspora Investors</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic">
+                            "Living abroad, we needed a team we could trust 100%. Via Realtors is that team. They are transparent, efficient, and their investment advice has been priceless. Highly recommended."
+                        </p> <!-- <--- This was </g>, corrected to </p> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 
+      Footer
+      Corresponds to Blueprint Sections 8 (Newsletter) & 11 (Social Proof)
+    -->
+    <footer class="bg-charcoal text-white pt-16 sm:pt-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12">
+                <!-- Brand & Tagline -->
+                <div class="md:col-span-4 lg:col-span-2">
+                    <a href="#" class="mb-4 inline-block">
+                        <!-- 
+                          IMAGE PLACEHOLDER: logo.png (inverted/white version if available)
+                          DESCRIPTION: Your company logo, preferably a monochrome white 
+                          version for dark backgrounds.
+                        -->
+                        <img class="h-10 w-auto" src="logo.png" alt="Via Realtors Logo"
+                             onerror="this.onerror=null; this.src='https://placehold.co/150x40/F7E7CE/36454F?text=VIA+REALTORS&font=inter';">
+                    </a>
+                    <p class="text-stone-300 text-lg mb-4">"Invest smart, live beautifully."</p>
+                    <p class="text-stone-400 max-w-sm">
+                        Nigeria's leading real estate consultancy for verified, luxury, and high-ROI properties.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="text-lg font-bold text-white mb-4">Quick Links</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Properties</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">About Us</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Investor Hub</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-3Examples of such tags include [Image of the human digestive system],  etc. Be very economical in your use of image tags, only add multiple tags if each additional tag is adding instructive value beyond pure illustration. Place the image tag immediately before or after the relevant text without disrupting the flow of the response.
+
+
+**Structure of the response when fixing code execution errors**
+Your response should consist of
+  * Immersive Document: The *entire* original document, with your code changes, enclosed within `<immersive>` and `` tags.
+  * Response to user: Should be exactly "I made some changes. [summary of changes]", where [summary of changes] is a short summary of the changes you made to the code.
+-colors duration-300">Blog / Insights</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h5 class="text-lg font-bold text-white mb-4">Services</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Buy Property</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Sell Property</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Property Management</a></li>
+                        <li><a href="#" class="text-stone-300 hover:text-gold transition-colors duration-300">Investment Advisory</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Subscription (from Section 8) -->
+                <div class="md:col-span-2 lg:col-span-1">
+                    <h5 class="text-lg font-bold text-white mb-4">VIP Investor Updates</h5>
+                    <p class="text-stone-300 mb-4 text-sm">Get exclusive deals and market trends first.</p>
+                    <form>
+                        <input type="email" placeholder="Your Email Address" class="w-full px-4 py-3 rounded-lg text-charcoal mb-3 focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300" required>
+                        <button type="submit" class="w-full bg-gold text-white px-6 py-3 rounded-lg text-base font-semibold hover:bg-gold-dark shadow-lg transition-all duration-300 ease-in-out">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="mt-12 sm:mt-16 py-8 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-stone-400 text-sm">
+                    &copy; <span id="current-year"></span> Via Realtors. All Rights Reserved.
+                </p>
+                <!-- Social Media Links (from Section 11) -->
+                <div class="flex space-x-5 mt-4 sm:mt-0">
+                    <a href="#" class="text-stone-400 hover:text-gold transition-colors duration-300" aria-label="WhatsApp">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.0-5.525 4.479-10 10-10s10 4.475 10 10c0 5.525-4.479 10-10 10-2.098 0-4.144-.546-5.946-1.587L.057 24zM12 21.8c4.835 0 8.8-3.965 8.8-8.8 0-4.835-3.965-8.8-8.8-8.8S3.2 8.165 3.2 13c0 2.021.64 3.931 1.761 5.542L3.13 22.868l4.354-1.815c1.584.92 3.445 1.446 5.516 1.446zM18.368 15.2c-.225-.112-1.327-.655-1.533-.73-.205-.075-.354-.112-.504.112-.15.225-.581.73-.712.879-.13.15-.261.168-.486.056-.225-.113-.944-.347-1.8-.756-1.018-.468-1.708-1.116-1.932-1.3-.225-.184-.023-.347.09-.459.102-.1.225-.261.338-.392.112-.13.15-.225.225-.375.075-.15.038-.281-.019-.392-.056-.112-.504-1.218-.69-1.668-.184-.45-.368-.392-.504-.392-.13 0-.281-.019-.431-.019-.15 0-.392.056-.581.281-.19.225-.712.69-.712 1.668 0 .979.73 1.941.832 2.079.102.13 1.459 2.235 3.537 3.125 1.761.756 2.121.85 2.516.809.525-.056 1.327-.546 1.514-.925.19-.375.19-.69.13-.809-.056-.113-.205-.184-.43-.308z"/></svg>
+                    </a>
+                    <a href="#" class="text-stone-400 hover:text-gold transition-colors duration-300" aria-label="Instagram">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919 4.919 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.356.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.356 2.618 6.78 6.98 6.98 1.281.059 1.689.073 4.948.073s3.667-.014 4.947-.072c4.356-.2 6.78-2.618 6.98-6.98.059-1.281.073 1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.356-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.44-.645 1.44-1.44s-.645-1.44-1.44-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="text-stone-400 hover:text-gold transition-colors duration-300" aria-label="TikTok">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.17.04-4.36-.6-6.08-1.96-1.64-1.28-2.62-3.1-2.8-5.04-.02-1.21-.01-2.42.01-3.63.01-2.05 1.49-3.81 3.57-4.17 1.95-.34 3.82.32 5.01 1.81.06.08.1.18.14.28.01-.48.01-.96.01-1.43.01-2.88 0-5.75.02-8.62zM12.24 16.1c.01.2.01.4.01.59 0 1.23-.46 2.33-1.28 3.11-1.07 1.03-2.64 1.44-4.14 1.03-1.14-.3-2.09-1.03-2.73-2.02-.63-1-.9-2.16-.9-3.32 0-1.14.26-2.27.79-3.26.49-.91 1.17-1.68 2-2.25.01.21.01.43.01.64 0 2.11-.01 4.22-.01 6.33z"/></svg>
+                    </a>
+                    <a href="#" class="text-stone-400 hover:text-gold transition-colors duration-300" aria-label="Facebook">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 
+      Floating WhatsApp Button
+      Corresponds to Blueprint Section 8: "Floating WhatsApp Chat Button"
+      UPDATED with new number and hover effect
+    -->
+    <a href="https://wa.me/2349038389618" target="_blank" rel="noopener noreferrer" title="Chat with Via Realtors" class="floating-wa fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:bg-[#128C7E] transition-all duration-300 transform hover:scale-105 z-40 group flex items-center space-x-2 hover:px-5">
+        <img src="whatsapp.png" alt="WhatsApp" class="w-8 h-8 flex-shrink-0 rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/48x48/25D366/ffffff?text=WA'">
+        <span class="hidden group-hover:block transition-all duration-300 pr-2 font-semibold whitespace-nowrap">Chat with Via Realtors</span>
+    </a>
+    
+    <!-- 
+      <script>
+        // Wrap script in DOMContentLoaded to prevent race conditions
+        document.addEventListener('DOMContentLoaded', (event) => {
+            
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            // Check if elements exist before adding listener
+            if (menuBtn && menu) {
+                menuBtn.addEventListener('click', () => {
+                    menu.classList.toggle('hidden');
+                });
+            }
+
+            // Set current year in footer
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+    -->
+</body>
+</html>
+
